@@ -7,7 +7,7 @@ def start(update: Update, context: CallbackContext):
 
 def main():
     # Вставь сюда свой токен
-    token = "7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8"
+    token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'
     
     # Создаем объект Updater и передаем токен
     updater = Updater(token)
