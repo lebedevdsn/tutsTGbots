@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Открой мини приложение", web_app={"url": "https://ТВОЙ_СЕРВЕР/mini_app.html"})],
+        [InlineKeyboardButton("Открой мини приложение", web_app={"url": "https://lebedevdsn.github.io/tutsTGbots"})],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text('Добро пожаловать! Нажмите на кнопку, чтобы открыть мини-приложение:', reply_markup=reply_markup)
