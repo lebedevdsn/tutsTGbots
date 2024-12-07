@@ -17,10 +17,17 @@ h1 {
     font-family: Raleway;
     font-size: 36px;
     line-height: 100%;
-    
+
     margin-top: 16px;
     margin-bottom: 16px;
 
+}
+
+h2 {
+    color: black;
+    font-family: Raleway;
+    font-size: 24px;
+    line-height: 100%;
 }
 
 p {
@@ -30,18 +37,61 @@ p {
     line-height: 130%;
 }
 
-p .BtnP {
-    color: #4C4C4C;
+
+button {
     font-family: Raleway;
     font-weight: 700;
     font-size: 16px;
     line-height: 130%;
-}
+    width: 100%;
 
-.button {
-    color: white;
+    color: #ffffff;
     padding: 16px 24px;
     border-radius: 100px;
+    text-align: center;
     background: var(--Main, #F90000);
     border-style: none!important;
+    margin: 20px 0;
+}
+
+
+.mainImg {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 32px;
+
+    background: grey;
+}
+
+.mainList {
+    margin-top: 20px;
+}
+
+.courseList {
+    background: #dbdbdb;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+}
+
+.courseList p {
+    margin-left: -140px;
+}
+
+.LessonIcon {
+    width: 42px;
+    height: 42px;
+
+    background: grey;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+
+    background: grey;
 }
