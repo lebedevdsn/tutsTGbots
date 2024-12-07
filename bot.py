@@ -7,7 +7,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton("Открой мини приложение", web_app={"url": "https://lebedevdsn.github.io/tutsTGbots"})],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text('Добро пожаловать! Нажмите на кнопку, чтобы открыть мини-приложение:', reply_markup=reply_markup)
+    await update.message.reply_text('Добро пожаловать! Нажмите на кнопку, чтобы узнать что у Маришки в попе сегодня:', reply_markup=reply_markup)
 
 def main():
     token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'
