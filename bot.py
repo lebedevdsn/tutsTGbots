@@ -22,43 +22,41 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=reply_markup
     )
 
-# Функция для обработки текста и публикации в канал
-async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_message = update.message.text  # Получаем текст сообщения
+import requests
 
-    try:
-        # Отправляем текст в канал
-        await context.bot.send_message(chat_id=CHANNEL_ID, text=user_message)
-        await update.message.reply_text("Ваше текстовое сообщение отправлено в канал!")
-    except Exception as e:
-        logging.error(f"Ошибка отправки текста в канал: {e}")
-        await update.message.reply_text("Не удалось отправить текстовое сообщение в канал.")
+# Функция публикации контента в канал и мини-приложении
+async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = update.message
+    CHANNEL_ID = "@your_channel_id"
 
-# Функция для обработки фото и публикации в канал
-async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    photo = update.message.photo[-1]  # Берем самое большое качество фото
-    caption = update.message.caption  # Текст, прикрепленный к фото (если есть)
+    # Публикация текста
+    if message.text:
+        await context.bot.send_message(chat_id=CHANNEL_ID, text=message.text)
 
-    try:
-        # Отправляем фото в канал
-        await context.bot.send_photo(chat_id=CHANNEL_ID, photo=photo.file_id, caption=caption)
-        await update.message.reply_text("Ваше фото отправлено в канал!")
-    except Exception as e:
-        logging.error(f"Ошибка отправки фото в канал: {e}")
-        await update.message.reply_text("Не удалось отправить фото в канал.")
+        # Отправляем текст на сервер мини-приложения
+        requests.post("http://127.0.0.1:5000/post", json={"type": "text", "content": message.text})
 
-# Функция для обработки видео и публикации в канал
-async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    video = update.message.video  # Получаем видео
-    caption = update.message.caption  # Текст, прикрепленный к видео (если есть)
+    # Публикация фото
+    if message.photo:
+        file_id = message.photo[-1].file_id
+        file = await context.bot.get_file(file_id)
+        photo_url = file.file_path
 
-    try:
-        # Отправляем видео в канал
-        await context.bot.send_video(chat_id=CHANNEL_ID, video=video.file_id, caption=caption)
-        await update.message.reply_text("Ваше видео отправлено в канал!")
-    except Exception as e:
-        logging.error(f"Ошибка отправки видео в канал: {e}")
-        await update.message.reply_text("Не удалось отправить видео в канал.")
+        await context.bot.send_photo(chat_id=CHANNEL_ID, photo=photo_url)
+
+        # Отправляем фото на сервер мини-приложения
+        requests.post("http://127.0.0.1:5000/post", json={"type": "photo", "content": photo_url})
+
+    # Публикация видео
+    if message.video:
+        file_id = message.video.file_id
+        file = await context.bot.get_file(file_id)
+        video_url = file.file_path
+
+        await context.bot.send_video(chat_id=CHANNEL_ID, video=video_url)
+
+        # Отправляем видео на сервер мини-приложения
+        requests.post("http://127.0.0.1:5000/post", json={"type": "video", "content": video_url})
 
 def main():
     token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'  # Токен вашего бота
