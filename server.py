@@ -1,22 +1,27 @@
 from flask import Flask, request, jsonify
+import logging
 
 app = Flask(__name__)
 
-# Хранилище для сообщений
-data_store = []
+# Логирование
+logging.basicConfig(level=logging.INFO)
 
+# API для получения контента
 @app.route('/post', methods=['POST'])
-def post_message():
-    content = request.json
-    if not content or 'type' not in content or 'content' not in content:
-        return jsonify({"error": "Invalid data"}), 400
+def post_content():
+    data = request.get_json()
 
-    data_store.append(content)
-    return jsonify({"message": "Content added successfully!"}), 201
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
 
-@app.route('/get', methods=['GET'])
-def get_messages():
-    return jsonify(data_store)
+    # Выводим принятый контент на сервер
+    content_type = data.get("type")
+    content = data.get("content")
+    
+    logging.info(f"Received {content_type} with content: {content}")
+    
+    return jsonify({"status": "success"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Запускаем сервер на 0.0.0.0 для доступа извне
+    app.run(host='0.0.0.0', port=5000, debug=True)
