@@ -18,7 +18,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        'Добро пожаловать! Нажмите на кнопку, чтобы узнать что у Маришки в попе сегодня:', 
+        'Добро пожаловать! Нажмите на кнопку, чтобы узнать что у Маришки в попе fсегодня:', 
         reply_markup=reply_markup
     )
 
