@@ -21,8 +21,7 @@ async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Отправляем текст в канал
     await context.bot.send_message(
-        chat_id=CHANNEL_ID,
-        text=f"Сообщение от @{update.message.from_user.username or 'аноним'}:\n{user_message}"
+        chat_id=CHANNEL_ID
     )
 
     # Подтверждаем пользователю, что сообщение отправлено
