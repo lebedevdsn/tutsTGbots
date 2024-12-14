@@ -9,7 +9,7 @@ logging.basicConfig(
 )
 
 # Замените на ID вашего канала
-CHANNEL_ID = -1001234567890  # Используй числовой ID канала
+CHANNEL_ID = "-1002283526037"  # Используй числовой ID канала
 
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
