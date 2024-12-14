@@ -6,7 +6,7 @@ import requests
 # Настройка логирования
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO
+    level=logging.DEBUG
 )
 
 # Замените на ID вашего канала
@@ -26,36 +26,51 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Функция публикации контента в канал и мини-приложении
 async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message
-    CHANNEL_ID = "@your_channel_id"
+    logging.debug(f"Received message: {message.text}")  # Логируем входящее сообщение
 
     # Публикация текста
     if message.text:
+        logging.debug(f"Posting text to channel: {message.text}")
         await context.bot.send_message(chat_id=CHANNEL_ID, text=message.text)
 
         # Отправляем текст на сервер мини-приложения
-        requests.post("http://127.0.0.1:5000/post", json={"type": "text", "content": message.text})
+        try:
+            response = requests.post("http://127.0.0.1:5000/post", json={"type": "text", "content": message.text})
+            logging.debug(f"Response from mini app: {response.status_code} - {response.text}")
+        except Exception as e:
+            logging.error(f"Error posting to mini app: {e}")
 
     # Публикация фото
     if message.photo:
         file_id = message.photo[-1].file_id
         file = await context.bot.get_file(file_id)
         photo_url = file.file_path
+        logging.debug(f"Posting photo to channel: {photo_url}")
 
         await context.bot.send_photo(chat_id=CHANNEL_ID, photo=photo_url)
 
         # Отправляем фото на сервер мини-приложения
-        requests.post("http://127.0.0.1:5000/post", json={"type": "photo", "content": photo_url})
+        try:
+            response = requests.post("http://127.0.0.1:5000/post", json={"type": "photo", "content": photo_url})
+            logging.debug(f"Response from mini app: {response.status_code} - {response.text}")
+        except Exception as e:
+            logging.error(f"Error posting to mini app: {e}")
 
     # Публикация видео
     if message.video:
         file_id = message.video.file_id
         file = await context.bot.get_file(file_id)
         video_url = file.file_path
+        logging.debug(f"Posting video to channel: {video_url}")
 
         await context.bot.send_video(chat_id=CHANNEL_ID, video=video_url)
 
         # Отправляем видео на сервер мини-приложения
-        requests.post("http://127.0.0.1:5000/post", json={"type": "video", "content": video_url})
+        try:
+            response = requests.post("http://127.0.0.1:5000/post", json={"type": "video", "content": video_url})
+            logging.debug(f"Response from mini app: {response.status_code} - {response.text}")
+        except Exception as e:
+            logging.error(f"Error posting to mini app: {e}")
 
 # Основная функция
 def main():
