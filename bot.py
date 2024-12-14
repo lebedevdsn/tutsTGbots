@@ -1,6 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import logging
+import requests
 
 # Настройка логирования
 logging.basicConfig(
@@ -21,8 +22,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'Добро пожаловать! Нажмите на кнопку, чтобы узнать что у Маришки в попе fсегодня:', 
         reply_markup=reply_markup
     )
-
-import requests
 
 # Функция публикации контента в канал и мини-приложении
 async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -58,6 +57,7 @@ async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Отправляем видео на сервер мини-приложения
         requests.post("http://127.0.0.1:5000/post", json={"type": "video", "content": video_url})
 
+# Основная функция
 def main():
     token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'  # Токен вашего бота
 
@@ -68,13 +68,13 @@ def main():
     application.add_handler(CommandHandler("start", start))
 
     # Обработчик текстовых сообщений
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, post_to_channel))
 
     # Обработчик фото
-    application.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+    application.add_handler(MessageHandler(filters.PHOTO, post_to_channel))
 
     # Обработчик видео
-    application.add_handler(MessageHandler(filters.VIDEO, handle_video))
+    application.add_handler(MessageHandler(filters.VIDEO, post_to_channel))
 
     # Запускаем бота
     application.run_polling()
