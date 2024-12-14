@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # Замените на ID вашего канала (например, "-1001234567890")
-CHANNEL_ID = "@your_channel_name"  # Или используйте числовой ID канала
+CHANNEL_ID = "-1002283526037"  # Или используйте числовой ID канала
 
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
