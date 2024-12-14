@@ -8,63 +8,44 @@
 </head>
 
 <body>
-  <section class="H1andP">
-    <div class="mainImg" href="#"></div>
-    <h1>Тест учебных приложений</h1>
-    <p>Краткое описание приложения <br>и того что входит в состав курса</p>
-    <button>К просмотру</button>
-  </section>
+  <h1>Публикации</h1>
+  <div id="content"></div>
 
-  <sectiom class="tutorials">
-    <h2>Список уроков</h2>
-    <div class="mainList">
-
-      <div class="courseList">
-        <div class="LessonIcon"></div>
-        <p>Название урока</p>
-        <div class="icon"></div>
-      </div>
-
-      <div class="courseList">
-        <div class="LessonIcon"></div>
-        <p>Название урока</p>
-        <div class="icon"></div>
-      </div>
-
-      <div class="courseList">
-        <div class="LessonIcon"></div>
-        <p>Название урока</p>
-        <div class="icon"></div>
-      </div>
-    </div>
-    
-  </sectiom>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <script>
-    // Инициализация Web App API Telegram
-    const tg = window.Telegram.WebApp;
+      async function fetchData() {
+          const response = await fetch("http://127.0.0.1:5000/get");
+          const data = await response.json();
 
-    // Установка цвета фона
-    tg.expand(); // Разворачивает приложение на весь экран
-    tg.MainButton.text = "Начать";
-    tg.MainButton.show();
+          const contentDiv = document.getElementById("content");
+          contentDiv.innerHTML = "";
+
+          data.forEach(item => {
+              const div = document.createElement("div");
+              div.classList.add("message");
+
+              if (item.type === "text") {
+                  div.textContent = item.content;
+              } else if (item.type === "photo") {
+                  const img = document.createElement("img");
+                  img.src = item.content;
+                  img.classList.add("photo");
+                  div.appendChild(img);
+              } else if (item.type === "video") {
+                  const video = document.createElement("video");
+                  video.src = item.content;
+                  video.controls = true;
+                  video.classList.add("video");
+                  div.appendChild(video);
+              }
+
+              contentDiv.appendChild(div);
+          });
+      }
+
+      setInterval(fetchData, 5000); // Обновляем каждые 5 секунд
+      fetchData();
   </script>
-  <script async src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-      window.Telegram.WebApp.init();
-  </script>
+</body>
+</html>
 </body>
 </html>
