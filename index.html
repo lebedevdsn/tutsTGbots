@@ -9,42 +9,43 @@
 
 <body>
   <h1>Публикации</h1>
-  <div id="content"></div>
+<div id="content"></div>
 
-  <script>
-      async function fetchData() {
-          const response = await fetch("http://127.0.0.1:5000/get");
-          const data = await response.json();
+<script>
+    async function fetchData() {
+        // Замените на ваш публичный URL
+        const response = await fetch("http://127.0.0.1:5000/get"); // или используйте ngrok URL
+        const data = await response.json();
 
-          const contentDiv = document.getElementById("content");
-          contentDiv.innerHTML = "";
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = "";
 
-          data.forEach(item => {
-              const div = document.createElement("div");
-              div.classList.add("message");
+        data.forEach(item => {
+            const div = document.createElement("div");
+            div.classList.add("message");
 
-              if (item.type === "text") {
-                  div.textContent = item.content;
-              } else if (item.type === "photo") {
-                  const img = document.createElement("img");
-                  img.src = item.content;
-                  img.classList.add("photo");
-                  div.appendChild(img);
-              } else if (item.type === "video") {
-                  const video = document.createElement("video");
-                  video.src = item.content;
-                  video.controls = true;
-                  video.classList.add("video");
-                  div.appendChild(video);
-              }
+            if (item.type === "text") {
+                div.textContent = item.content;
+            } else if (item.type === "photo") {
+                const img = document.createElement("img");
+                img.src = item.content;
+                img.classList.add("photo");
+                div.appendChild(img);
+            } else if (item.type === "video") {
+                const video = document.createElement("video");
+                video.src = item.content;
+                video.controls = true;
+                video.classList.add("video");
+                div.appendChild(video);
+            }
 
-              contentDiv.appendChild(div);
-          });
-      }
+            contentDiv.appendChild(div);
+        });
+    }
 
-      setInterval(fetchData, 5000); // Обновляем каждые 5 секунд
-      fetchData();
-  </script>
+    setInterval(fetchData, 5000); // Обновляем каждые 5 секунд
+    fetchData(); // Стартуем загрузку сразу
+</script>
 </body>
 </html>
 </body>
