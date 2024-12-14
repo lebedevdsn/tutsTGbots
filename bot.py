@@ -1,8 +1,15 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import logging
 
-# Замените на ID вашего канала (например, "-1001234567890")
-CHANNEL_ID = "-1002283526037"  # Или используйте числовой ID канала
+# Настройка логирования
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
+
+# Замените на ID вашего канала
+CHANNEL_ID = -1001234567890  # Используй числовой ID канала
 
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -19,13 +26,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text  # Получаем текст сообщения от пользователя
 
-    # Отправляем текст в канал
-    await context.bot.send_message(
-        chat_id=CHANNEL_ID
-    )
-
-    # Подтверждаем пользователю, что сообщение отправлено
-    await update.message.reply_text("Ваше сообщение отправлено в канал!")
+    try:
+        # Отправляем текст в канал (без имени пользователя)
+        await context.bot.send_message(
+            chat_id=CHANNEL_ID,
+            text=user_message
+        )
+        # Подтверждаем пользователю, что сообщение отправлено
+        await update.message.reply_text("Ваше сообщение отправлено в канал!")
+    except Exception as e:
+        logging.error(f"Ошибка отправки сообщения в канал: {e}")
+        await update.message.reply_text("Не удалось отправить сообщение в канал. Проверьте настройки.")
 
 def main():
     token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'  # Токен вашего бота
@@ -44,3 +55,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
