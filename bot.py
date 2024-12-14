@@ -7,7 +7,7 @@ import httpx
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 # Замените на ID вашего канала
-CHANNEL_ID = "@your_channel_id"  # ИЛИ используйте числовой ID канала
+CHANNEL_ID = "-1002283526037"  # ИЛИ используйте числовой ID канала
 
 # Указание URL для мини-приложения (можно использовать ngrok URL или IP-адрес)
 MINI_APP_URL = "http://127.0.0.1:5000/post"  # или используйте публичный URL, например, через ngrok
@@ -60,7 +60,7 @@ async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await client.post(MINI_APP_URL, json={"type": "video", "content": video_url})
 
 def main():
-    token = 'YOUR_BOT_TOKEN'  # Замените на токен вашего бота
+    token = '7758221545:AAF5qzVWzBqB_eqIitAlADFR3_di2jBFGC8'  # Замените на токен вашего бота
 
     # Создаем объект Application и передаем токен
     application = Application.builder().token(token).build()
