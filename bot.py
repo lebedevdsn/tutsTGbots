@@ -1,6 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import logging
+import requests
 
 # Настройка логирования
 logging.basicConfig(
@@ -21,8 +22,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'Добро пожаловать! Нажмите на кнопку, чтобы узнать что у Маришки в попе fсегодня:', 
         reply_markup=reply_markup
     )
-
-import requests
 
 # Функция публикации контента в канал и мини-приложении
 async def post_to_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
